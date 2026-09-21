@@ -30,7 +30,7 @@ class Memory(ABC):
         ...
 
 class TokenMemory(Memory):
-    max_tokens = 1000
+    max_tokens = 2000
     def save_context(self, type: Literal["ai", "human"], message: str):
         tokens = contar_tokens(message)
         

@@ -48,7 +48,7 @@ O chatbot pode ser utilizado principalmente por:
 |-----------|---------|---------------|
 | Pipeline LCEL | ✅ | `src/chain.py` - composição de prompt, modelo e parser |
 | ChatOllama | ✅ | `ChatOllama` utilizando `gemma4:cloud` via Ollama Cloud |
-| Memória gerenciada / Token Buffer Memory | ✅ | `src/memory.py` - memória baseada em limite de 1000 tokens |
+| Memória gerenciada / Token Buffer Memory | ✅ | `src/memory.py` - memória baseada em limite de 2000 tokens |
 | Controle de tokens | ✅ | `tiktoken` utilizado para contabilizar os tokens do histórico |
 | Pydantic v2 | ✅ | `AnaliseSchema` em `src/schemas.py`, com 4 campos |
 | Contexto da conversa | ✅ | Histórico armazenado pela memória e utilizado nas interações |
@@ -187,7 +187,7 @@ src/memory.py
 
 O limite definido no projeto é de:
 
-**1000 tokens**
+**2000 tokens**
 
 A cada nova mensagem, o sistema calcula a quantidade de tokens utilizada. Quando o limite é ultrapassado, as mensagens mais antigas são removidas.
 
@@ -202,7 +202,7 @@ Mensagem adicionada à memória
       ↓
 Cálculo do total
       ↓
-Total > 1000 tokens?
+Total > 2000 tokens?
       ↓
  ┌───────────────┐
  │               │
@@ -472,7 +472,7 @@ python main.py -rot
 
 - A interface atualmente funciona pelo terminal;
 - O funcionamento depende da configuração do Ollama Cloud;
-- A memória possui limite de 1000 tokens;
+- A memória possui limite de 2000 tokens;
 - Informações antigas podem ser removidas quando o limite é ultrapassado;
 - O teste de Context Rotation é executado separadamente através do argumento `-rot`.
 
@@ -486,7 +486,7 @@ O projeto consiste em uma **IA de assistência à escrita**, desenvolvida para a
 
 O sistema realiza uma análise inicial da solicitação para identificar a tarefa adequada e utiliza **Prompt Engineering** para adaptar o comportamento do modelo.
 
-A aplicação utiliza uma implementação própria de **Token Buffer Memory**, com limite de **1000 tokens**, para controlar o histórico das conversas.
+A aplicação utiliza uma implementação própria de **Token Buffer Memory**, com limite de **2000 tokens**, para controlar o histórico das conversas.
 
 Além disso, o projeto possui um mecanismo de **Context Rotation** para avaliar a retenção de informações ao longo de múltiplas interações.
 

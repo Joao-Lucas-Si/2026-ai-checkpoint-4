@@ -16,7 +16,7 @@ from src.memory import TokenMemory
 model = ChatOllama(
     model="gemma4:cloud",
     base_url="https://ollama.com",
-    num_predict=150
+    num_predict=250
     
 )
 memory = TokenMemory()
@@ -98,5 +98,5 @@ def main_pipeline(prompt: str, ):
         })
 
         return response
-    except:
-        return "algo deu errado, tente novamente."
+    except Exception as e:
+        return f"algo deu errado, tente novamente." 

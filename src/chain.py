@@ -16,6 +16,7 @@ from src.memory import TokenMemory
 model = ChatOllama(
     model="gemma4:cloud",
     base_url="https://ollama.com",
+    num_predict=150
     
 )
 memory = TokenMemory()
@@ -83,16 +84,19 @@ def pipeline(system: str, message: str, format: type[BaseModel]|None = None, *, 
 
 
 def main_pipeline(prompt: str, ):
-    analise = pipeline("analise", prompt,format=AnaliseSchema, persona="assets/prompt/main/analise/analise-persona.md")
-    
-    response = pipeline(analise.tipo, f"""
-[analise]
-{str(analise)}
-[input do usuario]
-{{prompt}}
-    """, data={
-        "prompt": prompt,
-        # "analise": str(analise)
-    })
+    try:
+        analise = pipeline("analise", prompt,format=AnaliseSchema, persona="assets/prompt/main/analise/analise-persona.md")
+        
+        response = pipeline(analise.tipo, f"""
+    [analise]
+    {str(analise)}
+    [input do usuario]
+    {{prompt}}
+        """, data={
+            "prompt": prompt,
+            # "analise": str(analise)
+        })
 
-    return response
+        return response
+    except:
+        return "algo deu errado, tente novamente."

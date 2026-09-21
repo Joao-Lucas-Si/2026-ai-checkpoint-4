@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict
 class AnaliseSchema(BaseModel):
     model_config = ConfigDict(use_attribute_docstrings=True)
     
-    tipo: Literal["resumo","expansão","brainstrom"]
+    tipo: Literal["resumo","expansao","brainstorm"]
     "o tipo da tarefa requerida"
     tema: str
     "o tema do texto"

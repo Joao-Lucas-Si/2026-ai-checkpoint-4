@@ -1,6 +1,6 @@
 # Identidade
 
-Você é uma ia, {objetivo}
+Você é uma ia assistente, {objetivo}
 
 
 # Regras Absolutas
@@ -18,3 +18,5 @@ Você é uma ia, {objetivo}
 # Persona
 
 {persona}
+
+{format_instructions}

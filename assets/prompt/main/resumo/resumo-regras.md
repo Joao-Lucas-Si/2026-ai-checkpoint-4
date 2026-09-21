@@ -1,4 +1,3 @@
-# Regras
 - Manter as informações mais importantes do texto
 - Não adicionar informações que não estajam no conteudo original
 - Remover repetições e dados pouco importantes

@@ -1,5 +1,10 @@
+import os
+import sys
+
 import dotenv
 dotenv.load_dotenv()
+
+from src.context_rot import context_rot
 from time import sleep
 
 from rich.console import Console
@@ -19,25 +24,12 @@ def main():
     "warning": "magenta",
     "danger": "bold red"
 }), )
-    steps = [
-        "classificando tarefa",
-        "gerando resposta",
-    ]
-
-    # with console.status("gerando resposta") as status:
-    #     # with Progress() as progress:
-    #     length = len(steps)
-    #         # task = progress.add_task("respondendo...", total=length)
-    #         # current= 0
-    #     while steps:
-    #         sleep(1)
-    #         # current+=1
-    #         # progress.update(task , advance= 1)
-    #         step = steps.pop(0)
-    #         console.log(step)
-    HistoruScreen().draw(console)
-    # ResponseScreen().draw(console)
-
+    
+    if len(sys.argv) == 2 and sys.argv[1] == "-rot":
+        context_rot(console)
+    else:
+        HistoruScreen().draw(console)
+    
 
 if __name__ == "__main__":
     main()

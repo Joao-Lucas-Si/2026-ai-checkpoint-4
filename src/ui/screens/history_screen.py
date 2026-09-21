@@ -9,15 +9,13 @@ from rich.padding import Padding
 from rich.panel import Panel
 from rich.prompt import Prompt
 
-from src.chain import pipeline
+from src.schemas import AnaliseSchema
+from src.chain import main_pipeline, pipeline
 from src.ui.elements.screen import Screen
 
 input = Prompt
 
 class Session():
-    
-    
-    
     sessions: dict[str, PromptSession] = {}
     
     @staticmethod
@@ -32,6 +30,16 @@ class Session():
 def clean():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def userMessage(message: dict, console: Console):
+    width = int(console.width/2.5)
+    panel = Panel(Markdown(message["content"], justify="right",), width=width,padding=(1, 2),  border_style="#93358D")
+    return Align.right(Padding(panel,pad=(0,2)), )
+
+def chatMessage(message: dict, console: Console):
+    width = int(console.width/2.5)
+    panel = Panel(Markdown(message["content"]), padding=(1, 2),  title="chatbot", width=width, expand=True, title_align="left", border_style="#FFB71B")
+    return Align.left(Padding(panel, pad=(0,2)))
+
 class HistoruScreen(Screen):
     messages = [
         {"type": "user", "content": "*oi*", "time": "14:00"},
@@ -39,7 +47,7 @@ class HistoruScreen(Screen):
     ]
     
     def drawMessage(self, console: Console):
-        # clean()
+        clean()
         layout = Layout()
             
         layout.split_row(
@@ -49,12 +57,12 @@ class HistoruScreen(Screen):
         width = int(console.width/2.5)
         for message in self.messages:
             if message["type"] == "user":
-                panel = Panel(Markdown(message["content"], justify="right",), width=width,padding=(1, 2),  border_style="#93358D")
                 
-                console.print(Align.right(Padding(panel,pad=(0,2)), ))
+                
+                console.print(userMessage(message, console))
             else:
-                panel = Panel(Markdown(message["content"]), padding=(1, 2),  title="chatbot", width=width, expand=True, title_align="left", border_style="#FFB71B")
-                console.print(Align.left(Padding(panel, pad=(0,2))))
+                
+                console.print(chatMessage(message, console))
          
         # console.log(layout)           
     
@@ -63,17 +71,18 @@ class HistoruScreen(Screen):
         while True:
             
             self.drawMessage(console)
-            choice = input.ask("ação", choices=["perguntar", "resumo", "expansao", "brainstorm"], console=console)
-
-            prompt = Session.get_session(choice).prompt("sua mensagem: ", )
+   
+            prompt = Session.get_session("mensagens").prompt("sua mensagem: ", )
             
             self.messages.append({
                 "type": "user",
                 "content": prompt
             })
+
             self.drawMessage(console)
-            response = pipeline(choice, prompt)
-            
+           
+            response = main_pipeline(prompt)
+
             self.messages.append({
                 "type": "chat",
                 "content": response

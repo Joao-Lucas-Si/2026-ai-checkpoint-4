@@ -42,8 +42,7 @@ def chatMessage(message: dict, console: Console):
 
 class HistoruScreen(Screen):
     messages = [
-        {"type": "user", "content": "*oi*", "time": "14:00"},
-        {"type": "chat", "content": "oi, como posso ajudar", "time": "14:01"},
+      
     ]
     
     def drawMessage(self, console: Console):

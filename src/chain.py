@@ -32,7 +32,6 @@ def pipeline(system: str, message: str, format: type[BaseModel]|None = None, *, 
     
     base = open("assets/prompt/templates/base.md").read()
     # return base
-
     prompt = ChatPromptTemplate(messages=[
         ("system", base),
         # MessagesPlaceholder("history"),
